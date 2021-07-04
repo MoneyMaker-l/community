@@ -1,0 +1,79 @@
+body{
+    background:url('image/bg.jpg') repeat;
+}
+.main{
+    background: white;
+    margin: 66px 131px;
+    opacity: 0.94;
+}
+.btn-publish{
+    float: right;
+    margin-bottom: 15px;
+}
+.media-object{
+    width: 38px;
+    height: 38px;
+}
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+.community-menu{
+    color:#999!important;
+    font-size: 13px!important;
+}
+.menu {
+    color: #999;
+}
+.menu .icon{
+    margin-right: 7px;
+    cursor: pointer;
+}
+.menu .active{
+    color: #499ef3;
+}
+.menu .icon:hover{
+    color: #499ef3;
+}
+.comment-main{
+    margin-top: 20px;
+    border: solid #eee;
+    padding: 17px 6px 17px 17px;
+    border-radius: 19px;
+}
+.question-tag{
+    margin-top: 8px;
+    display: block;
+    width: 58px;
+    font-size: 14px;
+    margin-right: 7px;
+}
+.question-div-tag{
+    padding-left: 0;
+    margin-top: 9px;
+}
+.publish-tag{
+    cursor: pointer;
+}
+.publish-tag:hover{
+    color: #499ef3;
+}
+.profile-edit{
+    float: right;
+    font-size: 13px;
+}
+.error-image{
+    background:url('image/bg.jpg') repeat;
+}
+.jumbotron{
+    background:url('image/bg.jpg') repeat;
+}
+.footer{
+    padding: 20px;
+    text-align: center;
+}
+.notification-question{
+    margin: 15px;
+    display: block;
+}

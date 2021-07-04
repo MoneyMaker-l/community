@@ -1,0 +1,105 @@
+/*
+  提交回复
+ */
+function post() {
+    var questionId = $("#question_id").val();
+    var content = $("#community_content").val();
+    var type = $("#type").val();
+
+    if (!content){
+        alert("不能回复空内容")
+        return
+    }
+
+    console.log(questionId);
+    console.log(content);
+    console.log(type);
+
+    $.ajax({
+        type: "POST",
+        url: "/comment",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({question_id: questionId, content: content, type: type}),
+        success: function (response) {
+            if (response.code == 200) {
+                window.location.reload();
+            } else if (response.code == 2003){
+                alert("不能回复空内容");
+            }
+
+        },
+        dataType: "json"
+    });
+
+}
+
+/*
+    展开二级评论
+ */
+function collapseComments(e){
+    var id = e.getAttribute("data-id");
+    var comments = $('#comment-'+id);
+    var collapse = e.getAttribute("data-collapse")
+    if (collapse){
+        //折叠评论
+        comments.removeClass("in");
+        e.removeAttribute("data-collapse");
+        e.classList.remove("active");
+    }else{
+        // 展开评论
+        comments.addClass("in")
+        e.setAttribute("data-collapse","in");
+        e.classList.add("active");
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "/comment/id",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({question_id: id, content: content, type: type}),
+        success: function (response) {
+            if (response.code == 200) {
+                window.location.reload();
+            } else if (response.code == 2003){
+                alert("不能回复空内容");
+            }
+
+        },
+        dataType: "json"
+    });
+
+}
+/*
+    二级评论的回复
+ */
+function comment(e) {
+    var commentId = e.getAttribute("data-id");
+    var content = $("#input-" + commentId).val();
+
+    $.ajax({
+        type: "POST",
+        url: "/comment",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({question_id: commentId, content: content, type: 2}),
+        success: function (response) {
+            if (response.code == 200) {
+                window.location.reload();
+            } else if (response.code == 2003){
+                alert("不能回复空内容");
+            }
+
+        },
+        dataType: "json"
+    });
+
+
+}
+function selectTag(value){
+    var previous = $("#tag").val();
+    if (previous){
+        $("#tag").val(previous+','+value);
+    }else {
+        $("#tag").val(value);
+    }
+
+}
