@@ -30,7 +30,7 @@ public class CommentController {
     @ResponseBody
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     //回复问题
-    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
+    public ResultDTO post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request
                       ){
 
@@ -60,7 +60,7 @@ public class CommentController {
     }
     @ResponseBody
     @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
-    public Object comments(@RequestBody CommentCreateDTO commentCreateDTO){
+    public ResultDTO comments(@RequestBody CommentCreateDTO commentCreateDTO){
 
         Comment  comment = new Comment();
         comment.setContent(commentCreateDTO.getContent());
