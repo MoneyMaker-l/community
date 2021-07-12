@@ -77,3 +77,11 @@ body{
     margin: 15px;
     display: block;
 }
+.profile-publish{
+    display: block;
+    margin: 8px;
+}
+.profile-hr{
+    display: block;
+    margin: 2px;
+}

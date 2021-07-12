@@ -32,16 +32,21 @@ public class QuestionService {
 
     public PaginationDTO list(String search,int page, int size){
 
-
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalCount = questionMapper.count();
-
-        //传入  -1  或者  比 totalPage 大的数时，在查询数据库之前 将page设为相应的值
+        int totalPage;
+        //获取totalPage
+        if (totalCount % size == 0){
+            totalPage = totalCount/size;
+        }else {
+            totalPage = totalCount/size + 1;
+        }
+        //page < 1 或者 > totalPage
         if (page < 1){
             page = 1;
         }
-        if (page > totalCount){
-            page = totalCount;
+        if (page > totalPage){
+            page = totalPage;
         }
         //offset 是 limit 中的第一个元素
         Integer offset = size*(page - 1);
@@ -66,11 +71,11 @@ public class QuestionService {
                 questionDTOS.add(questionDTO);
 
             }
-            paginationDTO.setQuestions(questionDTOS);
+            paginationDTO.setQuestionDTOS(questionDTOS);
 
             return  paginationDTO;
         }
-        //questionMapper 去 分页查询
+        //主页显示 分页查询
         List<Question> questionList = questionMapper.select(offset,size);
 
         for (Question question : questionList) {
@@ -82,7 +87,7 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
 
         }
-        paginationDTO.setQuestions(questionDTOS);
+        paginationDTO.setQuestionDTOS(questionDTOS);
         paginationDTO.setPagenation(totalCount,size,page);
 
         return  paginationDTO;
@@ -122,7 +127,7 @@ public class QuestionService {
             questionDTOS.add(questionDTO);
 
         }
-        paginationDTO.setQuestions(questionDTOS);
+        paginationDTO.setQuestionDTOS(questionDTOS);
 
 
         return  paginationDTO;

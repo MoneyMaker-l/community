@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class PaginationDTO {
-    private List<QuestionDTO> questions;
+    private List<QuestionDTO> questionDTOS;
     private List<NotificationNameQuestionDTO> notificationNameQuestionDTOS = null;
     private boolean showPrevious;
     private boolean showFirstPage;
@@ -39,6 +39,7 @@ public class PaginationDTO {
         if (page > totalPage){
             page = totalPage;
         }
+        //paginationDTO的page是纠错后的page
         this.page = page;
 
         //这个地方  有点不容易想到
@@ -76,9 +77,6 @@ public class PaginationDTO {
         }else {
             showEndPage = true;
         }
-
-
-
 
     }
 }

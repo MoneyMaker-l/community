@@ -23,9 +23,8 @@
         <div th:if="${pagination.getQuestions() != null}">
             <div class="media" th:each="question : ${pagination.getQuestions()}">
                 <div class="media-left">
-                    <img class="media-object img-rounded" src="https://avatars.githubusercontent.com/u/85466730?v=4"
+                    <img class="media-object img-rounded" th:src="${question.user.avatar_url}"
                          alt="">
-                    <!--                        ${question.user.avatar_url}-->
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">
