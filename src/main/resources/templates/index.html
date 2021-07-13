@@ -28,13 +28,13 @@
                     <h4 class="media-heading">
                         <a th:href="@{'/question/'+${question.id}}"><span th:text="${question.getTitle()}"></span></a>
                     </h4>
-                    <hr style="margin: 0px">
                     <span class="text-desc">•
                             <span th:text="${question.getLike_count()}"></span> 人关注 • <span
                                 th:text="${question.getComment_count()}"></span> 个回复 • <span
-                                th:text="${question.getView_count()}"></span> 次浏览
+                                th:text="${question.getView_count()}"></span> 次浏览 <span
+                                th:text="${#calendars.format(question.gmt_create,'yyyy-MM-dd')}" style="float: right"></span>
                     </span>
-                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 2px">
+                    <hr class=" col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 2px">
                 </div>
             </div>
 

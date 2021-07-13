@@ -12,11 +12,11 @@ import java.util.List;
 @Mapper
 public interface QuestionMapper {
 
-    @Insert("insert into question(title,description,tag,creator) values (#{title},#{description},#{tag},#{creator})")
-    void create(Question question);
+    @Insert("insert into question(title,description,tag,creator,gmt_create) values (#{title},#{description},#{tag},#{creator},#{gmt_create})")
+    void createQuestion(Question question);
 
     //展示所有用户的问题 按分页显示
-    @Select("select * from question limit #{offset},#{size}")
+    @Select("select * from question order by gmt_create desc limit #{offset},#{size}")
     List<Question> select(@Param("offset") int offset, @Param("size") int size);
 
     @Select("select count(*) from question ")
@@ -33,7 +33,7 @@ public interface QuestionMapper {
     Question getById(@Param("id") Integer id);
 
     @Update("update question set title=#{title},description=#{description},tag=#{tag} where id = #{id}")
-    void update(Question question);
+    void updateQuestion(Question question);
 
     @Update("update question set view_count = #{view_count} + 1  where id = #{id}" )
     void updateViewCount(Question question);

@@ -22,7 +22,7 @@ public interface CommentMapper {
     void insert(Comment comment);
 
     //需要回复人的头像， 名称， 回复的内容，回复时间
-    @Select("SELECT q.id,c.id,TYPE,gmt_create,content,u.name,avatar_url\n" +
+    @Select("SELECT q.id,c.id,TYPE,c.gmt_create,content,u.name,avatar_url\n" +
             "FROM (comment c INNER JOIN user u ON c.commentator = u.id)\n" +
             "INNER JOIN question q ON q.id=c.`question_id`\n" +
             "WHERE q.id = #{id}\n and type = 1 ORDER BY c.`gmt_create` DESC;")

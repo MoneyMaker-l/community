@@ -18,4 +18,7 @@ public class Question {
     private Integer comment_count;
     private Integer view_count;
     private Integer like_count;
+    private long gmt_create;
+    private long gmt_modified;
+
 }

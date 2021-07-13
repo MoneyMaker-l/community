@@ -32,7 +32,12 @@ function post() {
     });
 
 }
-
+/*
+未登录，跳转登录
+ */
+function login(){
+    alert("未登录");
+}
 /*
     展开二级评论
  */

@@ -20,7 +20,7 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>发起</h2>
+            <h2><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&nbsp;提问</h2>
             <form action="/publish/edit" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
@@ -66,12 +66,22 @@
         </div>
 
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>问题发起指南</h3>
-            <span class="profile-publish">-问题标题：请用简洁的语言描述你发布的内容</span>
-            <hr class="profile-hr">
-            <span class="profile-publish">-问题补充：详细补充你的内容 </span> <br>
-            <hr class="profile-hr">
-            <span class="profile-publish">-选择标签：选择一个或多个合适的标签，用逗号隔开 </span> <br>
+            <div class="mod-head">
+                <h3>问题发起指南</h3>
+            </div>
+            <div class="mod-body">
+                <p><b>• 问题标题:</b> 请用<b style="color:red">精简</b>的语言描述您发布的问题，不超过25字</p>
+                <p><b>• 问题补充:</b> 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料：							<li>服务器运行环境信息；</li>
+                <li>软件版本；</li>
+                <li>问题发生的上下文信息；</li>
+                <li>可以完整复现问题的代码（如可直接运行于 Kibana Console 的复现流程）；</li>
+                <li>补充完整的异常和错误信息；</li>
+                <li>注意阅读格式友好，代码和异常信息请用代码标签格式化张贴；</li>
+
+                </p>
+                <p><b>• 选择标签:</b> 选择一个或者多个合适的标签，不超过<b style="color:red">10</b>个字</p>
+            </div>
+        </div>
 
         </div>
 
