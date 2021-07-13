@@ -2,7 +2,6 @@ package com.lv.community.service;
 
 import com.lv.community.dto.Comment;
 import com.lv.community.dto.CommentQueryDTO;
-import com.lv.community.dto.QuestionDTO;
 import com.lv.community.mapper.CommentMapper;
 import com.lv.community.mapper.NotificationMapper;
 import com.lv.community.mapper.QuestionMapper;
@@ -32,7 +31,7 @@ public class CommentService {
     @Transactional
     public void insert(Comment comment,int questionId) {
 
-        Question question = questionMapper.getById(questionId);
+        Question question = questionMapper.findQuestionById(questionId);
         questionMapper.updateQuestionByComment(question);
         commentMapper.insert(comment);
         //加入通知  数据库

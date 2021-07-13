@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Data
 public class NotificationDTO {
-    private List<QuestionDTO> questions = null;
+    private List<QuestionDTO> questionDTOS = null;
     private List<NotificationNameQuestionDTO> notificationNameQuestionDTOS;
     private Integer newReply;
     private boolean showPrevious;

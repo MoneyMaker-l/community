@@ -37,7 +37,7 @@ public class QuestionController {
         //设为已读
         notificationMapper.updateStatus(notificationId);
 
-        QuestionDTO questionDTO = questionService.getById(id);
+        QuestionDTO questionDTO = questionService.findQuestionById(id);
         model.addAttribute("question",questionDTO);
 
         List<Question> relativeQuestions = questionService.selectRelativeQuestion(id);

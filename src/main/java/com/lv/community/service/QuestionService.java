@@ -133,8 +133,8 @@ public class QuestionService {
         return  paginationDTO;
     }
 
-    public QuestionDTO getById(Integer id) {
-        Question question = questionMapper.getById(id);
+    public QuestionDTO findQuestionById(Integer id) {
+        Question question = questionMapper.findQuestionById(id);
         //异常处理
         if (question == null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -158,7 +158,7 @@ public class QuestionService {
 
     //增加 阅读数
     public void incView(Integer id) {
-        Question question = questionMapper.getById(id);
+        Question question = questionMapper.findQuestionById(id);
         questionMapper.updateViewCount(question);
         System.out.println(question.getView_count());
 

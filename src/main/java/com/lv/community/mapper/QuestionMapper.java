@@ -30,7 +30,7 @@ public interface QuestionMapper {
     List<Question> list(@Param("creator") Integer creator, @Param("offset") int offset, @Param("size") int size);
 
     @Select("select * from question where  id = #{id}")
-    Question getById(@Param("id") Integer id);
+    Question findQuestionById(@Param("id") Integer id);
 
     @Update("update question set title=#{title},description=#{description},tag=#{tag} where id = #{id}")
     void updateQuestion(Question question);
