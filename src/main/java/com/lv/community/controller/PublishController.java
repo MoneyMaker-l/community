@@ -28,7 +28,6 @@ public class PublishController {
     public String publish(){
         return "publish";
     }
-
     @GetMapping("/publish/{id}")
     public String edit(@PathVariable(name = "id") Integer id,
                        Model model){
@@ -50,8 +49,6 @@ public class PublishController {
            HttpServletRequest request,
            Model model
     ){
-        System.out.println("doPublish------->");
-
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
