@@ -75,6 +75,12 @@ function collapseComments(e){
 
 }
 /*
+    点赞
+ */
+function doLike(e){
+    e.classList.add("active");
+}
+/*
     二级评论的回复
  */
 function comment(e) {
