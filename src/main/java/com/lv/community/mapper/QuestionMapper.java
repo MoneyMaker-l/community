@@ -56,4 +56,7 @@ public interface QuestionMapper {
     @Select("select title from question where id = #{questionId}")
     String selectNotifierName(@Param("questionId") int questionId);
 
+    @Update("update question set like_count=like_count+1 where id =#{id}")
+    int updateLikeCountByPrimaryKey(@Param("id") Integer questionId);
+
 }
