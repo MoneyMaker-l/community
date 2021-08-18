@@ -3,9 +3,11 @@ package com.lv.community.service;
 
 import com.google.common.collect.Sets;
 import com.lv.community.api.Constant;
+import com.lv.community.dto.HotArticlDTO;
 import com.lv.community.mapper.QuestionMapper;
 import com.lv.community.pojo.Question;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +16,8 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -59,25 +63,27 @@ public class LikeService {
                 String title = question.getTitle();
                 String zsetRank = Constant.RedisRank;
 
-                int LikeCount = uIds.size();;
-                zSetOperations.add(zsetRank,questionId+"-"+title,LikeCount);
+                int LikeCount = uIds.size();//一个redis:rank:v1 53::如何做分页
+                zSetOperations.add(zsetRank,questionId+"::"+title,LikeCount);
             }
         }
         return true;
     }
 
     //获取排行榜热点文章
-    public Set<String> getHotArticle(){
-        Set<String> set = Sets.newHashSet();
+    public List<HotArticlDTO> getHotArticle(){
+        List<HotArticlDTO> list = new LinkedList<>();
         String zsetRank = Constant.RedisRank;
         ZSetOperations zSetOperations = redisTemplate.opsForZSet();
-        Set<ZSetOperations.TypedTuple<String>> typedTuples = zSetOperations.reverseRangeWithScores(zsetRank, 0, 9);
-        for (ZSetOperations.TypedTuple<String> typedTuple : typedTuples) {
-            String value = typedTuple.getValue();
-            set.add(value);
+        Set<String> zset = zSetOperations.reverseRange(zsetRank, 0, 9); //
+        for (String s : zset) {
+            int pos = StringUtils.indexOf(s,"::");
+            String saId = StringUtils.substring(s,0,pos);
+            String aTitle = StringUtils.substring(s,pos+2);
+            int aId = Integer.parseInt(saId);
+            list.add(new HotArticlDTO(aTitle,aId));
         }
-
-        return set;
+        return list;
     }
 
 }

@@ -72,7 +72,7 @@
             <h3>热点帖子</h3>
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div th:each="article : ${hotArticle}">
-                <h5><span th:text="${article}"></span></h5>
+                <h5><a th:href="@{'/question/'+${article.getArticleId()}}"><span th:text="${article.getArtileTitle()}"></span></a></h5>
             </div>
         </div>
 
