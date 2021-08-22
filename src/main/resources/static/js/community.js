@@ -77,8 +77,28 @@ function collapseComments(e){
 /*
     点赞
  */
-function doLike(e){
-    e.classList.add("active");
+function doLike(that){
+
+    var userId =$(that).attr('data-id');
+    var questionId =$(that).attr('data-questionId');
+    if (userId == 0){
+        alert("请登录后再点赞")
+    }
+    $.ajax({
+        type: "POST",
+        url: "/doLike",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({userId: userId,questionId : questionId }),
+        success: function (response) {
+            if (response.code == 0) {
+                window.location.reload();
+            } else if (response.code == -1){
+                alert("错误");
+            }
+
+        },
+        dataType: "json"
+    });
 }
 /*
     二级评论的回复

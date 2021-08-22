@@ -44,11 +44,14 @@ public class LikeService {
 
         if (canLike){
             //可以点赞
-            //Todo:更新到数据库
+            //更新到数据库
+            if (userId == 0){
+                return true;
+            }
             int res = questionMapper.updateLikeCountByPrimaryKey(questionId);
 
             if (res > 0){
-                //Todo:缓存点赞的相关信息 (hash -- key --field<questionId> -- value(set<userId...>)))
+                //缓存点赞的相关信息 (hash -- key --field<questionId> -- value(set<userId...>)))
                 String hashUserId = Constant.RedisLikeUserId;
                 //得到点过该问题赞的 set<Integer> userId
                 Set<Integer> uIds = hashOperations.get(hashUserId, questionId.toString());
@@ -58,7 +61,7 @@ public class LikeService {
                 uIds.add(userId);
                 hashOperations.put(hashUserId,questionId.toString(),uIds);
 
-                //Todo：更新排行榜
+                //更新排行榜
                 Question question = questionMapper.findQuestionById(questionId);
                 String title = question.getTitle();
                 String zsetRank = Constant.RedisRank;
@@ -75,7 +78,7 @@ public class LikeService {
         List<HotArticlDTO> list = new LinkedList<>();
         String zsetRank = Constant.RedisRank;
         ZSetOperations zSetOperations = redisTemplate.opsForZSet();
-        Set<String> zset = zSetOperations.reverseRange(zsetRank, 0, 9); //
+        Set<String> zset = zSetOperations.reverseRange(zsetRank, 0, 9); //value 分为 questionId  title
         for (String s : zset) {
             int pos = StringUtils.indexOf(s,"::");
             String saId = StringUtils.substring(s,0,pos);
@@ -86,4 +89,10 @@ public class LikeService {
         return list;
     }
 
+    //取消点赞
+    public void unLike(Integer userId,Integer questionId){
+
+        //todo:
+
+    }
 }
