@@ -42,6 +42,8 @@ function login(){
     展开二级评论
  */
 function collapseComments(e){
+    var type = $("#type2").val();
+
     var id = e.getAttribute("data-id");
     var comments = $('#comment-'+id);
     var collapse = e.getAttribute("data-collapse")

@@ -59,14 +59,17 @@ public class LikeService {
                     uIds = Sets.newHashSet();
                 }
                 uIds.add(userId);
+                //添加到 缓存 hash中
                 hashOperations.put(hashUserId,questionId.toString(),uIds);
 
-                //更新排行榜
+                //2、更新排行榜
                 Question question = questionMapper.findQuestionById(questionId);
                 String title = question.getTitle();
                 String zsetRank = Constant.RedisRank;
 
-                int LikeCount = uIds.size();//一个redis:rank:v1 53::如何做分页
+                //uids 大小就是点赞数
+                int LikeCount = uIds.size();//一个redis:rank:v1 53::如何做分页：
+
                 zSetOperations.add(zsetRank,questionId+"::"+title,LikeCount);
             }
         }
