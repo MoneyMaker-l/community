@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author lvjiangtao
@@ -54,9 +52,9 @@ public class QuestionService {
         List<QuestionDTO> questionDTOS = new ArrayList<>();
 
         //搜索內容 查询
-        if (search != null && search != ""){
+        if (search != null && !search.equals("")){
             String[] searchs = search.split(" ");
-            String regexp = Arrays.stream(searchs).collect(Collectors.joining("|"));
+            String regexp = String.join("|", searchs);
 
             List<Question> questionList = questionMapper.selectSearchQuestion(regexp,offset,size);
             totalCount = questionMapper.selectTotalSearchQuestion(regexp);
@@ -160,14 +158,12 @@ public class QuestionService {
     public void incView(Integer id) {
         Question question = questionMapper.findQuestionById(id);
         questionMapper.updateViewCount(question);
-        System.out.println(question.getView_count());
-
     }
 
     public List<Question> selectRelativeQuestion(Integer id) {
         String tag = questionMapper.selectTag(id);
         String[] tags = tag.split(",");
-        String regexp = Arrays.stream(tags).collect(Collectors.joining("|"));
+        String regexp = String.join("|", tags);
 
         List<Question> relativeQuestions = questionMapper.selectRelativeQuestion(regexp,id);
 

@@ -50,6 +50,7 @@
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
+                    //当前页
                     <li th:each="page : ${pagination.getPages()}" th:class="${pagination.page == page}? 'active' : ''">
                         <a th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
                     </li>
