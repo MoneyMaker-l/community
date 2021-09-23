@@ -31,6 +31,5 @@ class CommunityApplicationTests {
 
         SetOperations setOperations = redisTemplate.opsForSet();
         setOperations.add("123","java","mysql");
-
     }
 }

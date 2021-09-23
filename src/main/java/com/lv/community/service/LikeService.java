@@ -48,21 +48,24 @@ public class LikeService {
             if (userId == 0){
                 return true;
             }
+            //1、加到like 表
+
+            //2、更新question 表中的likeCount
             int res = questionMapper.updateLikeCountByPrimaryKey(questionId);
 
             if (res > 0){
                 //缓存点赞的相关信息 (hash -- key --field<questionId> -- value(set<userId...>)))
-                String hashUserId = Constant.RedisLikeUserId;
+                String hashKey = Constant.RedisLikeUserId;
                 //得到点过该问题赞的 set<Integer> userId
-                Set<Integer> uIds = hashOperations.get(hashUserId, questionId.toString());
+                Set<Integer> uIds = hashOperations.get(hashKey, questionId.toString());
                 if (uIds==null || uIds.isEmpty()){
                     uIds = Sets.newHashSet();
                 }
                 uIds.add(userId);
                 //添加到 缓存 hash中
-                hashOperations.put(hashUserId,questionId.toString(),uIds);
+                hashOperations.put(hashKey,questionId.toString(),uIds);
 
-                //2、更新排行榜
+                //3、更新排行榜
                 Question question = questionMapper.findQuestionById(questionId);
                 String title = question.getTitle();
                 String zsetRank = Constant.RedisRank;
@@ -93,9 +96,44 @@ public class LikeService {
     }
 
     //取消点赞
-    public void unLike(Integer userId,Integer questionId){
+    public boolean unLike(Integer userId,Integer questionId){
 
-        //todo:
+        //todo:取消点赞
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        String key = Constant.RedisLike+":"+userId+":"+questionId;
+        Boolean hasLiked = valueOperations.setIfAbsent(key, 1);
 
+        HashOperations<String,String,Set<Integer>> opsForHash = redisTemplate.opsForHash();
+
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+
+        //已经点过赞了 -- 可以取消点赞
+        if (!hasLiked){
+            //更新数据库
+            //1、删除like表中的信息
+
+            //2、更新question中的likeCount
+            int res = questionMapper.dreLikeCountByPrimaryKey(questionId);
+
+            if (res > 0){
+                String hashKey = Constant.RedisLikeUserId;
+                //删除 hash 中对应值
+                Set<Integer> uIds = opsForHash.get(hashKey, questionId.toString());
+                uIds.remove(userId);
+                opsForHash.put(hashKey,questionId.toString(),uIds);
+
+                //更新排行榜
+                Question question = questionMapper.findQuestionById(questionId);
+                String title = question.getTitle();
+                String zsetRank = Constant.RedisRank;
+
+                //uids 大小就是点赞数
+                int LikeCount = uIds.size();//一个redis:rank:v1 53::如何做分页：
+
+                zSetOperations.add(zsetRank,questionId+"::"+title,LikeCount);
+            }
+
+        }
+        return true;
     }
 }

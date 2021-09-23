@@ -83,7 +83,7 @@ function doLike(that){
 
     var userId =$(that).attr('data-id');
     var questionId =$(that).attr('data-questionId');
-    if (userId == 0){
+    if (userId === 0){
         alert("请登录后再点赞")
     }
     $.ajax({

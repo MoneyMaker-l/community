@@ -32,7 +32,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Integer id,
                            @PathVariable(name = "notificationId" ,required = false) Integer notificationId,
                            Model model){
-
+        //增加阅读量
         questionService.incView(id);
         //设为已读
         notificationMapper.updateStatus(notificationId);

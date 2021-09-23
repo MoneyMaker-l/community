@@ -53,15 +53,15 @@ public class PublishController {
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
 
-        if (title == null || title ==""){
+        if (title == null || title.equals("")){
             model.addAttribute("error","标题不能为空");
             return "publish";
         }
-        if (description == null || description == ""){
+        if (description == null || description.equals("")){
             model.addAttribute("error","问题描述不能为空");
             return "publish";
         }
-        if (tag == null || tag == ""){
+        if (tag == null || tag.equals("")){
             model.addAttribute("error","标签不能为空");
             return "publish";
         }
